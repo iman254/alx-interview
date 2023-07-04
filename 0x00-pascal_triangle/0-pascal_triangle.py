@@ -1,9 +1,13 @@
 #!/usr/bin/python3
 """ function that returns pascal triangle"""
+
+
 def pascal_triangle(n):
     """ finction that returnspascal triangle"""
+
     if n <= 0:
         return []
+
     else:
         completed = [[1]]
         for i in range(1, n):
