@@ -3,9 +3,9 @@
 
 
 def canUnlockAll(boxes):
-    """this method creates a system that can keep track of the
-     boxes open and groups them into a stack which is later
-     popped till empty"""
+    """this method creates a system that can keep track
+    of the boxes open and groups them into a stack
+    which is later popped till empty"""
     n = len(boxes)
     visited = [False] * n
     visited[0] = True
