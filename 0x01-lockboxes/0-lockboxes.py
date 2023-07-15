@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 """A method that determines if all the boxes can be opened."""
 def canUnlockAll(boxes):
     """this method creates a system that can keep track of the boxes open and groups them into a stack whiich is later popped till empty"""
