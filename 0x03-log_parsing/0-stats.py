@@ -1,46 +1,50 @@
 #!/usr/bin/python3
+"""Write a script that reads stdin line by line and computes metrics
+"""
 
-"""A script that reads stdin line y line and computes metrics"""
+
 import sys
-from collections import defaultdict
 
+# store the count of all status codes in a dictionary
+status_codes_dict = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
+                     '404': 0, '405': 0, '500': 0}
 
-def printing_statistics(total_size, status_counts):
-    """the function that takes in total_size and status_count as arguments and prints the status """
-    print(f"file size: {total_size}")
-    for status_code in sorted(status_counts.keys(), key=int):
-        if status_code.isdigit():
-            print(f"{status_code}: {status_counts[status_code]}")
+total_size = 0
+count = 0  # keep count of the number lines counted
 
+try:
+    for line in sys.stdin:
+        line_list = line.split(" ")
 
-def main():
-    total_size = 0
-    status_counts = defaultdict(int)
-    line_count = 0
+        if len(line_list) > 4:
+            status_code = line_list[-2]
+            file_size = int(line_list[-1])
 
-    try:
-        for line in sys.stdin:
-            line = line.strip()
-            parts = line.split("")
-            if len(parts) != 7:
-                continue
+            # check if the status code receive exists in the dictionary and
+            # increment its count
+            if status_code in status_codes_dict.keys():
+                status_codes_dict[status_code] += 1
 
-            ip, _, _, _, _, status_code, file_size = parts
+            # update total size
+            total_size += file_size
 
-            if not status_code.isdigit():
-                continue
+            # update count of lines
+            count += 1
 
-            total_size += int(file_size)
-            status_counts[status_code] += 1
+        if count == 10:
+            count = 0  # reset count
+            print('File size: {}'.format(total_size))
 
-            line_count += 1
+            # print out status code counts
+            for key, value in sorted(status_codes_dict.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
 
-        if line_count % 10 == 0:
-            print_statistics(total_size, status_counts)
+except Exception as err:
+    pass
 
-    except KeyboardInterrupt:
-        print_statistics(total_size, status_counts)
-        sys.exit(0)
-
-    if __name__ == "__main__":
-        main()
+finally:
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(status_codes_dict.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
