@@ -6,6 +6,7 @@ from collections import defaultdict
 
 
 def printing_statistics(total_size, status_counts):
+    """the function that takes in total_size and status_count as arguments and prints the status """
     print(f"file size: {total_size}")
     for status_code in sorted(status_counts.keys(), key=int):
         if status_code.isdigit():
@@ -24,7 +25,7 @@ def main():
             if len(parts) != 7:
                 continue
 
-            ip, -, -, -, -, status_code, file_size = parts
+            ip, _, _, _, _, status_code, file_size = parts
 
             if not status_code.isdigit():
                 continue
